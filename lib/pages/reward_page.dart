@@ -42,3 +42,18 @@ class _RewardPageState extends State<RewardPage> {
     );
   }
 }
+class RewardItem {
+  final String name;
+  final String amount;
+  final int pointsRequired;
+  final String imageAsset;
+  final Color color;
+
+  RewardItem({
+    required this.name,
+    required this.amount,
+    required this.pointsRequired,
+    required this.imageAsset,
+    required this.color,
+  });
+}

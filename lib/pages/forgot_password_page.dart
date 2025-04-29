@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sarana/Style/color.dart';
+import 'package:sarana/pages/forgot_Password_tahap_2.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -20,66 +22,43 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           },
         ),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Image.asset(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Image.asset(
                 "logo_email.png",
                 width: 150,
                 height: 150,
               ),
-            ],
-          ),
-          SizedBox(height: 16),
-          Text(
-            "Let's Sign In.",
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-        ],
             ),
-            SizedBox(
-              height: 48,
+            const SizedBox(height: 16),
+            const Text(
+              "Let's Sign In.",
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
-            SizedBox(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    " Email Addres",
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 5),
-                  TextField(
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      filled: true,
-                      fillColor: Colors.grey[300],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 10),
-                      prefixIcon: Icon(Icons.email_outlined),
-                    ),
-                  ),
-                ],
+            const SizedBox(height: 25),
+            const Text(
+              "Email Address",
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 5),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Email',
+                filled: true,
+                fillColor: Colors.grey[300],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                prefixIcon: const Icon(Icons.email_outlined),
               ),
             ),
-            SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25),
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -97,18 +76,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         builder: (context) => const ForgotPasswordPageTahap2()),
                   );
                 },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Send",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                child: const Text(
+                  "Send",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
