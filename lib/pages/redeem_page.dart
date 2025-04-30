@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sarana/pages/reward_page.dart';
+import 'package:sarana/pages/rewards_page.dart';
 
 class VoucherRedeemScreen extends StatelessWidget {
   final RewardItem reward;

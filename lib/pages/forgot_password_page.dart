@@ -10,13 +10,15 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -57,6 +59,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 contentPadding: const EdgeInsets.symmetric(vertical: 10),
                 prefixIcon: const Icon(Icons.email_outlined),
               ),
+              keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 25),
             SizedBox(
@@ -73,7 +76,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ForgotPasswordPageTahap2()),
+                      builder: (context) =>
+                          const ForgotPasswordPageTahap2(),
+                    ),
                   );
                 },
                 child: const Text(

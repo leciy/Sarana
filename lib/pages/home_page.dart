@@ -1,8 +1,10 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sarana/pages/daily_checkin_page.dart';
 import 'package:sarana/pages/leaderboard_page.dart';
-import 'package:sarana/pages/reward_page.dart';
+import 'package:sarana/pages/rewards_page.dart';
 import 'package:sarana/pages/training_page.dart';
+import 'package:sarana/pages/training_page_2.dart';
 
 class HomePages extends StatefulWidget {
   const HomePages({super.key});
@@ -12,24 +14,41 @@ class HomePages extends StatefulWidget {
 }
 
 class _HomePagesState extends State<HomePages> {
+  final List<String> bannerImages = [
+    'assets/banner.png',
+    'assets/banner.png',
+    'assets/banner.png'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue.shade100,
-      body: SafeArea(
+        body: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF34C1F0),
+              Color(0xFFEEFBFF),
+            ],
+            stops: [
+              0.0,
+              0.3
+            ]),
+      ),
+      child: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Profile dan greeting
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 24,
-                      backgroundImage: NetworkImage(
-                          'https://via.placeholder.com/150'), // Ganti dengan image asli
+                      radius: 27,
+                      backgroundImage: AssetImage('assets/google_24.png'),
                     ),
                     const SizedBox(width: 12),
                     const Text(
@@ -42,35 +61,39 @@ class _HomePagesState extends State<HomePages> {
                 const SizedBox(height: 20),
 
                 // Logo SARANA
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black12, blurRadius: 5),
-                    ],
-                  ),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Icon(Icons.layers, size: 40, color: Colors.blue),
-                        const SizedBox(height: 8),
-                        const Text(
-                          'SARANA',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue),
-                        ),
-                      ],
-                    ),
-                  ),
+                CarouselSlider(
+                  options: CarouselOptions(
+                      height: 155,
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      viewportFraction: 1),
+                  items: bannerImages.map((imagePath) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(color: Colors.black12, blurRadius: 5),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.asset(
+                              imagePath,
+                              width: double.infinity,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
                 ),
 
                 const SizedBox(height: 20),
 
-                // Menu Grid
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -84,7 +107,7 @@ class _HomePagesState extends State<HomePages> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const RewardPage()));
+                              builder: (context) => const RewardsScreen()));
                     }),
                     _buildMenuItem(Icons.emoji_events, 'Leaderboard', () {
                       Navigator.push(
@@ -103,43 +126,34 @@ class _HomePagesState extends State<HomePages> {
 
                 const SizedBox(height: 24),
 
-                // Recommendation title
                 const Text(
                   'Recommendation',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
                 const SizedBox(height: 12),
 
                 // Course Card list
-                SizedBox(
-                  height: 180,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    itemBuilder: (context, index) {
-                      return _buildCourseCard();
-                    },
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics:
+                      NeverScrollableScrollPhysics(), // Biar gak konflik scroll-nya
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 3 / 4,
                   ),
+                  itemCount: 8,
+                  itemBuilder: (context, index) {
+                    return _buildCourseCard();
+                  },
                 ),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-        ],
-      ),
-    );
+    ));
   }
 
   Widget _buildMenuItem(IconData icon, String label, VoidCallback onTap) {
@@ -148,61 +162,92 @@ class _HomePagesState extends State<HomePages> {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            height: 50,
-            width: 50,
+            height: 60,
+            width: 60,
             decoration: BoxDecoration(
               color: Colors.white,
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(12),
               boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
             ),
             child: Icon(icon, color: Colors.blue),
           ),
         ),
         const SizedBox(height: 8),
-        Text(label, style: const TextStyle(fontSize: 12)),
+        Text(label, style: const TextStyle(fontSize: 14)),
       ],
     );
   }
 
   Widget _buildCourseCard() {
-    return Container(
-      width: 160,
-      margin: const EdgeInsets.only(right: 12),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+    return GestureDetector(
+      child: Container(
+        width: 1500,
+        height: 200,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        margin: EdgeInsets.only(left: 8.0),
+        padding: EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(
+              "assets/logo_email.png",
+              width: double.infinity,
+              height: 60,
+              fit: BoxFit.contain,
+            ),
+            Text(
+              "Lorem Ipsum Heritage Of Alchemy",
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '11 Bab',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Colors.grey[700]),
+                      ),
+                      Text(
+                        "1 Hari Yang Lalu",
+                        style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow[800],
+                      ),
+                      Text(
+                        "5.0",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            'https://via.placeholder.com/150x80.png?text=Debug+Code',
-            height: 80,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Sollicitudin enim lobortis pharetra i...',
-            style: TextStyle(fontWeight: FontWeight.bold),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 4),
-          const Text('11 Bab  • 1 hari yang lalu',
-              style: TextStyle(fontSize: 12, color: Colors.grey)),
-          const SizedBox(height: 4),
-          Row(
-            children: const [
-              Icon(Icons.star, size: 14, color: Colors.amber),
-              SizedBox(width: 4),
-              Text('4.3', style: TextStyle(fontSize: 12)),
-            ],
-          ),
-        ],
-      ),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const TrainingPage2()));
+      },
     );
   }
 }

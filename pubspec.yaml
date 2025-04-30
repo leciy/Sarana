@@ -37,8 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.4
   http: ^1.3.0
-  device_info_plus: ^11.3.3
   shared_preferences: ^2.5.3
+  syncfusion_flutter_pdfviewer: ^29.1.39
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +50,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  
   flutter_launcher_icons: "^0.14.3"
 
 # For information on the generic Dart part of this file, see the
@@ -75,6 +76,11 @@ flutter:
   assets:
     - assets/logo/
     - assets/
+    # tak tambahin 4 asset lagi, jaga2 klo assets/ gak fungsi, kalau bisa, 4 asset dibawah ini hapus aja
+    - assets/logo/companies_logo/mcdonald_logo.png
+    - assets/logo/companies_logo/starbucks_logo.png
+    - assets/logo/companies_logo/kfc_logo.png
+    - assets/logo/companies_logo/richeese_logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

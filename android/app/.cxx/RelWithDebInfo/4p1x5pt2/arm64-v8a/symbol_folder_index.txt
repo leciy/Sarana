@@ -1,0 +1,1 @@
+D:\Flutter\sarana\build\app\intermediates\cxx\RelWithDebInfo\4p1x5pt2\obj\arm64-v8a

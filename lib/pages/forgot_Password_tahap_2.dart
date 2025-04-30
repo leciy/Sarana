@@ -38,7 +38,7 @@ class _ForgotPasswordPageTahap2State extends State<ForgotPasswordPageTahap2> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              "logo_email.png",
+              "assets/logo_email.png",
               width: 150,
               height: 150,
             ),
